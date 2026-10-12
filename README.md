@@ -38,7 +38,7 @@ Antes de comenzar, asegúrate de tener instalado:
 - **Node.js** (versión 16 o superior)
 - **npm** (versión 8 o superior)
 - **Git** para clonar el repositorio
-
+xd
 ### Verificación de Prerrequisitos
 ```bash
 # Verificar Node.js
