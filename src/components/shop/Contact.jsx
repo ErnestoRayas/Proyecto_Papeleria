@@ -1,0 +1,6 @@
+import React from 'react';
+import Icon from './Icon';
+
+export default function Contact() {
+  return <section><div className="section-heading"><div><span className="eyebrow">Siempre cerca de tus ideas</span><h1>Hablemos de tu próximo proyecto</h1></div></div><div className="contact-grid"><div className="panel"><Icon name="pin" size={32} /><h2>Visítanos en Tláhuac</h2><p className="muted">Encuentra Papelería Karen y recoge tu pedido en nuestra tienda. Consulta por WhatsApp la disponibilidad y el horario antes de visitarnos.</p><a className="button primary" href="https://www.google.com/maps/search/?api=1&query=19.2631317%2C-99.0021221" target="_blank" rel="noopener noreferrer">Cómo llegar <Icon name="arrow" size={18} /></a></div><div className="panel"><Icon name="user" size={32} /><h2>¿En qué podemos ayudarte?</h2><p className="muted">Pregunta por un artículo, tu pedido o los materiales para tu siguiente proyecto.</p><a className="button primary" href="https://wa.me/525530770406?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Papeler%C3%ADa%20Karen." target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp <Icon name="arrow" size={18} /></a><a className="contact-email" href="mailto:papeleriakaren@gmail.com">papeleriakaren@gmail.com</a></div></div></section>;
+}

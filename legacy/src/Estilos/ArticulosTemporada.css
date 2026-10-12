@@ -1,0 +1,205 @@
+.articulos-temporada-titulo {
+  text-align: center;
+  color: #d63031;
+  margin-bottom: 30px;
+}
+
+.articulos-temporada-contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.articulos-temporada-fila {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+}
+
+.articulos-temporada-producto {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border: 2px solid #d63031;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(214, 48, 49, 0.2);
+  transition: all 0.3s ease;
+}
+
+.articulos-temporada-producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(214, 48, 49, 0.3);
+}
+
+.articulos-temporada-imagen {
+  border-radius: 10px;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 2px solid #ffeaa7;
+}
+
+.articulos-temporada-nombre {
+  color: #2d3436;
+  margin: 8px 0;
+  font-size: 1.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.articulos-temporada-descripcion {
+  color: #636e72;
+  margin: 6px 0;
+  font-size: 0.85em;
+  height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.articulos-temporada-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.articulos-temporada-precio {
+  font-weight: bold;
+  color: #d63031;
+  font-size: 1.2em;
+}
+
+.articulos-temporada-stock {
+  font-size: 0.75em;
+  padding: 4px 8px;
+  border-radius: 10px;
+}
+
+.articulos-temporada-oferta {
+  text-align: center;
+  margin-top: 30px;
+  padding: 15px;
+  background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+  border-radius: 10px;
+  border: 2px dashed #d63031;
+}
+
+.articulos-temporada-oferta-titulo {
+  color: #2d3436;
+  margin: 0 0 10px 0;
+}
+
+.articulos-temporada-oferta-texto {
+  color: #636e72;
+  font-size: 1em;
+  margin: 0;
+}
+
+
+@media (max-width: 1024px) {
+  .articulos-temporada-fila {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .articulos-temporada-fila {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .articulos-temporada-producto {
+    padding: 12px;
+  }
+  
+  .articulos-temporada-imagen {
+    height: 100px;
+  }
+  
+  .articulos-temporada-nombre {
+    font-size: 1em;
+  }
+  
+  .articulos-temporada-precio {
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .articulos-temporada-fila {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .articulos-temporada-titulo {
+    font-size: 1.3em;
+    margin-bottom: 20px;
+  }
+  
+  .articulos-temporada-producto {
+    padding: 10px;
+  }
+  
+  .articulos-temporada-imagen {
+    height: 90px;
+  }
+  
+  .articulos-temporada-nombre {
+    font-size: 0.95em;
+  }
+  
+  .articulos-temporada-descripcion {
+    font-size: 0.8em;
+    height: 35px;
+  }
+  
+  .articulos-temporada-info {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+  
+  .articulos-temporada-precio {
+    text-align: center;
+  }
+  
+  .articulos-temporada-oferta {
+    margin-top: 20px;
+    padding: 12px;
+  }
+  
+  .articulos-temporada-oferta-titulo {
+    font-size: 1em;
+  }
+  
+  .articulos-temporada-oferta-texto {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 360px) {
+  .articulos-temporada-contenedor {
+    gap: 15px;
+  }
+  
+  .articulos-temporada-producto {
+    padding: 8px;
+  }
+  
+  .articulos-temporada-imagen {
+    height: 80px;
+  }
+  
+  .articulos-temporada-nombre {
+    font-size: 0.9em;
+  }
+  
+  .articulos-temporada-descripcion {
+    font-size: 0.75em;
+  }
+}

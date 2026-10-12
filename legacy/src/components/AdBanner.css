@@ -1,0 +1,283 @@
+.ad-banner {
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.4s ease;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin-bottom: 25px;
+  border: 2px solid transparent;
+}
+
+.ad-banner:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  border-color: #ff6b6b;
+}
+
+.ad-sidebar {
+  width: 100%;
+  height: 400px;
+  min-height: 400px;
+}
+
+.ad-square {
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+}
+
+.ad-banner {
+  width: 100%;
+  height: 180px;
+  min-height: 180px;
+}
+
+.ad-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ad-banner:hover .ad-image {
+  transform: scale(1.08);
+}
+
+.ad-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 30%,
+    rgba(0, 0, 0, 0.1) 70%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ad-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.ad-text {
+  color: white;
+  font-size: 1.4em;
+  font-weight: 700;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.ad-content-only {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 30px;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+.ad-label {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8em;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+  z-index: 3;
+}
+
+@media (max-width: 1440px) {
+  .ad-sidebar {
+    height: 450px;
+    min-height: 450px;
+  }
+  
+  .ad-square {
+    height: 280px;
+    min-height: 280px;
+  }
+  
+  .ad-banner {
+    height: 160px;
+    min-height: 160px;
+  }
+  
+  .ad-text {
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 1200px) {
+  .ad-sidebar {
+    height: 320px;
+    min-height: 320px;
+  }
+  
+  .ad-square {
+    height: 250px;
+    min-height: 250px;
+  }
+  
+  .ad-banner {
+    height: 140px;
+    min-height: 140px;
+  }
+  
+  .ad-text {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 1024px) {
+  .ad-sidebar {
+    height: 280px;
+    min-height: 280px;
+  }
+  
+  .ad-square {
+    height: 220px;
+    min-height: 220px;
+  }
+  
+  .ad-banner {
+    height: 120px;
+    min-height: 120px;
+  }
+  
+  .ad-text {
+    font-size: 1.1em;
+  }
+  
+  .ad-overlay {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-sidebar {
+    height: 240px;
+    min-height: 240px;
+  }
+  
+  .ad-square {
+    height: 200px;
+    min-height: 200px;
+  }
+  
+  .ad-banner {
+    height: 100px;
+    min-height: 100px;
+  }
+  
+  .ad-text {
+    font-size: 1em;
+  }
+  
+  .ad-overlay {
+    padding: 12px;
+  }
+  
+  .ad-label {
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ad-sidebar {
+    height: 200px;
+    min-height: 200px;
+  }
+  
+  .ad-square {
+    height: 180px;
+    min-height: 180px;
+  }
+  
+  .ad-banner {
+    height: 90px;
+    min-height: 90px;
+  }
+  
+  .ad-text {
+    font-size: 0.95em;
+  }
+  
+  .ad-overlay {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ad-sidebar {
+    height: 180px;
+    min-height: 180px;
+  }
+  
+  .ad-square {
+    height: 160px;
+    min-height: 160px;
+  }
+  
+  .ad-banner {
+    height: 80px;
+    min-height: 80px;
+  }
+  
+  .ad-text {
+    font-size: 0.9em;
+  }
+  
+  .ad-overlay {
+    padding: 8px;
+  }
+  
+  .ad-label {
+    top: 8px;
+    right: 8px;
+    font-size: 0.7em;
+    padding: 4px 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .ad-sidebar {
+    height: 160px;
+    min-height: 160px;
+  }
+  
+  .ad-square {
+    height: 140px;
+    min-height: 140px;
+  }
+  
+  .ad-banner {
+    height: 70px;
+    min-height: 70px;
+  }
+  
+  .ad-text {
+    font-size: 0.85em;
+  }
+  
+  .ad-overlay {
+    padding: 6px;
+  }
+}
