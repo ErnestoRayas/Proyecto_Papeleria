@@ -14,7 +14,7 @@ Proyecto universitario modernizado con **React 19 + Vite**, una interfaz adaptab
 - Contraseñas con `scrypt` y salt, sesiones persistentes con cookies HttpOnly, roles verificados en la API y recuperación con códigos de un solo uso.
 - Transacciones SQLite: precio y total se calculan en el servidor; el stock se descuenta **al confirmar el pedido**, nunca al añadir al carrito.
 
-### Revisión con UI UX Pro Max
+### Mejoras de interfaz y experiencia de usuario
 
 La interfaz incorpora una segunda revisión centrada en legibilidad y facilidad de compra:
 
@@ -32,8 +32,8 @@ Las decisiones y las recomendaciones consultadas están en [`design-system/papel
 Necesitas **Node.js 22.13 o superior**; se recomienda Node.js 24 LTS.
 
 ```bash
-git clone https://github.com/ErnestoRayas/REACT.git
-cd REACT
+git clone https://github.com/ErnestoRayas/Proyecto_Papeleria.git
+cd Proyecto_Papeleria
 npm ci
 ```
 
@@ -49,9 +49,19 @@ npm run server
 npm start
 ```
 
-Visita **http://localhost:3000**. Vite redirige `/api` a `http://localhost:3001`. La base de datos se crea automáticamente en `server/data/papeleria.sqlite`, con los 16 productos iniciales. Sus precios y cantidades son datos de ejemplo y pueden editarse en el inventario.
+Visita **http://localhost:3000**. Vite redirige `/api` a `http://localhost:3001`. La base de datos se crea automáticamente en `backend/data/papeleria.sqlite`, con los 16 productos iniciales. Sus precios y cantidades son datos de ejemplo y pueden editarse en el inventario.
 
 Las cuentas de clientes se crean desde **Mi cuenta → Crear una cuenta**. No existen contraseñas de administrador predefinidas.
+
+### Ediciones concurrentes y recuperación del checkout
+
+Cada producto devuelve un campo `version`. Para editarlo, `PUT /api/products/:id` debe incluir la versión obtenida al cargar sus datos. Una venta o una edición incrementa esa versión. Si otro proceso cambió el producto, la API devuelve `409` con `code: PRODUCT_VERSION_CONFLICT` y `currentProduct`; el editor muestra **Cargar datos actuales** antes de permitir guardar de nuevo.
+
+Al iniciar el servidor, las bases SQLite existentes reciben automáticamente la columna de versión, conservando productos, cuentas y pedidos.
+
+Antes de enviar un pedido, el checkout guarda su clave de reintento y sus datos en `sessionStorage`, separados por cuenta. Si la respuesta se pierde, al recargar o volver al carrito en la **misma pestaña** aparece **Reintentar el mismo pedido**. Se conserva la clave original, incluso si el stock ya se agotó o se añadieron otros productos al carrito. Después de confirmar, se retiran únicamente las cantidades compradas y se elimina el intento pendiente.
+
+Un rechazo definitivo de datos/precio (`400`/`409`) permite corregir el carrito y comenzar otro intento. Errores de conexión, servidor o sesión conservan el intento hasta poder comprobar su resultado.
 
 ### Crear un administrador
 
@@ -89,11 +99,11 @@ Puedes crear `.env` usando `.env.example` como referencia:
 | --- | --- | --- |
 | `PORT` | `3001` | Puerto de la API y del servidor web compilado |
 | `APP_ORIGIN` | `http://localhost:3000` | Origen exacto autorizado para las escrituras |
-| `DB_PATH` | `server/data/papeleria.sqlite` | Ruta persistente de la base de datos |
+| `DB_PATH` | `backend/data/papeleria.sqlite` | Ruta persistente de la base de datos |
 | `NODE_ENV` | desarrollo | Usa `production` en el despliegue HTTPS |
 | `VITE_API_URL` | `/api` | Prefijo de API del frontend; se aplica al compilar |
 
-El frontend y la API trabajan bajo **el mismo origen**. En desarrollo lo resuelve el proxy de Vite; en producción Express sirve tanto `build/` como `/api`. No se habilita CORS para sesiones entre dominios.
+El frontend y la API trabajan bajo **el mismo origen**. En desarrollo lo resuelve el proxy de Vite; en producción Express sirve tanto `frontend/dist/` como `/api`. No se habilita CORS para sesiones entre dominios. `.env` permanece en la raíz y se comparte como configuración de arranque; Vite solo expone al navegador las variables con prefijo `VITE_`.
 
 ## Compilar y desplegar
 
@@ -115,7 +125,7 @@ SQLite es apropiado para una instancia de servidor con volumen persistente. Un d
 
 ### Vista previa en Vercel
 
-`vercel.json` configura la compilación Vite y el directorio `build`. Un despliegue solamente estático muestra el catálogo de ejemplo, el editor de tarjetas, el carrito y los favoritos. La interfaz identifica este estado como **Vista de muestra** y deshabilita la confirmación de pedidos. Para operar con cuentas y pedidos se necesita el servidor persistente y una ruta `/api` en el mismo origen; SQLite local no se utiliza como almacenamiento persistente en funciones serverless.
+`vercel.json` configura la compilación Vite y el directorio `frontend/dist`. La raíz del proyecto en Vercel debe ser la raíz del repositorio, donde está `package.json`. Un despliegue solamente estático muestra el catálogo de ejemplo, el editor de tarjetas, el carrito y los favoritos. La interfaz identifica este estado como **Vista de muestra** y deshabilita la confirmación de pedidos. Para operar con cuentas y pedidos se necesita el servidor persistente y una ruta `/api` en el mismo origen; SQLite local no se utiliza como almacenamiento persistente en funciones serverless.
 
 ## Verificaciones
 
@@ -126,31 +136,58 @@ npm run build
 npm audit
 ```
 
-Las pruebas cubren navegación del catálogo, filtros, carrito, favoritos, acceso, checkout, vista sin API y permisos; en la API cubren autenticación, sesiones, recuperación, validaciones, inventario, idempotencia y compras simultáneas de la última unidad. Las pruebas del backend usan bases SQLite en memoria.
+Las pruebas cubren navegación del catálogo, filtros, carrito, favoritos, acceso, checkout, vista sin API y permisos; en la API cubren autenticación, sesiones, recuperación, validaciones, inventario, idempotencia y compras simultáneas de la última unidad. También incluyen conflictos de versión, recuperación del checkout después de perder una respuesta, conservación de selecciones nuevas y fallos de persistencia del intento. Las pruebas de API usan SQLite en memoria y la prueba de migración usa un archivo temporal que elimina al terminar.
 
 La revisión UI/UX también se comprobó en Chrome a 320, 375, 768, 1024 y 1440 px: reflujo sin desbordamiento horizontal, teclado, foco, movimiento reducido, filtros largos y ajustes de espaciado de texto. La revisión automática de accesibilidad no detectó infracciones en las vistas comprobadas de catálogo, ficha de producto, menú móvil, carrito y acceso; se complementó con pruebas de interacción.
 
 ## Estructura
 
 ```text
-src/
-  main.jsx                   # Punto de entrada Vite
-  App.jsx                    # Navegación y composición de la interfaz
-  App.css                    # Sistema visual y variantes responsive
-  components/shop/           # Catálogo, cuenta, carrito, pedidos y administración
-  store/ShopContext.jsx      # Estado compartido y persistencia local del carrito
-  services/api.js            # Cliente HTTP y manejo de errores
-  data/products.json         # Catálogo inicial y procedencia de las imágenes
-server/
-  app.cjs                    # Rutas, permisos, validación y transacciones
-  database.cjs               # Esquema SQLite e inicialización
-  security.cjs               # Contraseñas y tokens
-  manage.cjs                 # Administración de cuentas y recuperación
-  index.cjs                  # Arranque del servidor
-  app.test.cjs               # Pruebas de integración
-public/products/             # Imágenes optimizadas
+frontend/
+  src/
+    main.jsx                 # Entrada React
+    App.jsx                  # Navegación y composición
+    pages/                   # Catálogo, carrito, pedidos, tarjetas y administración
+    components/
+      auth/                  # Diálogo de cuenta
+      products/              # Componentes de producto reutilizables
+      ui/                    # Iconos, modales y estados de carga/error
+    hooks/                   # Hooks compartidos
+    store/                   # Estado de sesión, catálogo y carrito
+    services/                # Cliente HTTP
+    utils/                   # Persistencia de intentos de checkout
+    styles/                  # Sistema visual responsive
+  public/                    # Imágenes y archivos estáticos
+  tests/                     # Pruebas frontend y configuración
+  index.html                 # Documento de entrada
+  vite.config.mjs            # Desarrollo, compilación y Vitest
+  dist/                      # Compilación generada; excluida de Git
+backend/
+  src/
+    app.cjs                  # Composición de dependencias y middleware
+    index.cjs                # Arranque y cierre del servidor
+    routes/                  # Endpoints HTTP y respuestas
+    services/                # Validación y lógica de negocio
+    repositories/            # Consultas SQL
+    middleware/              # Sesión, permisos, origen y errores
+    database/                # Conexión, esquema, migración y transacciones
+    utils/                   # Seguridad, errores y validadores comunes
+  scripts/                   # CLI de administración y recuperación
+  tests/                     # Integración de API y migración
+  data/                      # SQLite; excluido de Git
+shared/data/                 # Catálogo inicial compartido, sin datos privados
+docs/                        # Arquitectura y revisiones técnicas
+design-system/               # Decisiones UI/UX
 legacy/                      # Prototipo académico original, fuera del bundle
+package.json                 # Comandos y dependencias del proyecto completo
+package-lock.json            # Instalaciones reproducibles
 ```
+
+Se mantiene una sola instalación de dependencias en la raíz: `npm ci` y todos los comandos anteriores se ejecutan allí. No es necesario instalar paquetes por separado en `frontend/` o `backend/`. El flujo del backend es **ruta → servicio → repositorio → SQLite**; frontend y backend solo comparten el catálogo inicial de `shared/data/`.
+
+### Actualizar una instalación con la estructura anterior
+
+La base de datos anteriormente ubicada en `server/data/` ahora reside en `backend/data/`. En esta copia local ya fue trasladada conservando sus datos. Para otra instalación, detén el servidor, realiza una copia de seguridad y mueve **la carpeta completa `server/data`** a `backend/data` antes de arrancar; no sobrescribas una base de destino existente. Si usas `DB_PATH`, puedes mantener tu ubicación persistente y no necesitas moverla. Las rutas HTTP `/api/*` y los comandos npm siguen siendo los mismos.
 
 ### Datos de la versión anterior
 

@@ -6,14 +6,14 @@
     "node": ">=22.13.0"
   },
   "scripts": {
-    "start": "vite --host 127.0.0.1 --port 3000",
-    "build": "vite build",
-    "preview": "vite preview",
-    "server": "node --env-file-if-exists=.env server/index.cjs",
-    "test": "vitest run",
-    "test:api": "node --test server/*.test.cjs",
-    "admin:create": "node --env-file-if-exists=.env server/manage.cjs admin",
-    "password:token": "node --env-file-if-exists=.env server/manage.cjs reset"
+    "start": "vite --config frontend/vite.config.mjs --host 127.0.0.1 --port 3000",
+    "build": "vite build --config frontend/vite.config.mjs",
+    "preview": "vite preview --config frontend/vite.config.mjs",
+    "server": "node --env-file-if-exists=.env backend/src/index.cjs",
+    "test": "vitest run --config frontend/vite.config.mjs",
+    "test:api": "node --test backend/tests/*.test.cjs",
+    "admin:create": "node --env-file-if-exists=.env backend/scripts/manage.cjs admin",
+    "password:token": "node --env-file-if-exists=.env backend/scripts/manage.cjs reset"
   },
   "dependencies": {
     "express": "^5.1.0",

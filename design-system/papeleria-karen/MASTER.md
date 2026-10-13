@@ -41,15 +41,11 @@ Tienda web de papelería para clientes de escuela, oficina y manualidades, desar
 - Iconos decorativos ocultos para tecnología asistiva; controles con nombre accesible.
 - Mensajes y estados comprensibles sin depender exclusivamente del color.
 
-## Recomendaciones consultadas
+## Criterios de revisión
 
-Revisión con los datos locales de UI UX Pro Max, instalador 2.15.0:
+- Legibilidad: texto base e inputs de tamaño suficiente y contraste medido.
+- Etiquetas y filtros: categorías visibles, valores completos y mensajes contextualizados.
+- Interacción táctil: controles cómodos para pantallas pequeñas.
+- Navegación: HTML semántico, diálogos nativos y conservación del foco durante búsquedas.
 
-| Consulta | Fuente verificada | Aplicación |
-| --- | --- | --- |
-| `body text readable mobile` | UX: Readable Font Size, Color Contrast | Texto base e inputs más grandes y contraste medido |
-| `badge chip label wraps` | UX: Compact Label Overflow, Contextual Live Badge Updates, Input Labels | Categorías en varias filas, valores completos y mensajes contextualizados |
-| `touch target pointer web` | UX: Target Size (Minimum), Touch Friendly | Objetivos táctiles más cómodos, diferenciando web y unidades nativas |
-| `accessible focus navigation` con `--stack react` | React 19.2: Manage focus properly, Use semantic HTML | Diálogos nativos y corrección del foco durante búsquedas |
-
-Los datos de la skill se usan como recomendaciones, adaptadas a esta tienda y a su stack web. La revisión automática se complementa con comprobación de teclado, tamaños de pantalla, texto largo y movimiento reducido.
+La revisión automática se complementa con comprobación de teclado, tamaños de pantalla, texto largo y movimiento reducido.
